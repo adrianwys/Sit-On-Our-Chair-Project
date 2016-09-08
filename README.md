@@ -3,7 +3,7 @@
 The project of an online furniture shop 
 
 # Preview
-![layout](10ways.jpg)
+![layout](warsztat1.jpg)
 
 #Details
 
