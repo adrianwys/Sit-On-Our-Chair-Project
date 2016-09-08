@@ -51,88 +51,94 @@ addEventListener('DOMContentLoaded', function(){
         }
         list[index].classList.add('visible');
 });
-// wybor krzeseł (dropdown list)
-// dotyczy rodzaju krzesła
-var arrowtype = document.querySelector('.arrow-type');
-var listtype = document.querySelector('.chair-list');
-var listitems = document.querySelector('.chair-list').children;
-var twojFotel = document.querySelector('.title');
-var price = document.querySelector('h4.value');
-var cena = document.querySelector('.sum');
-var suma = 0;
 
-arrowtype.addEventListener('click', function(){
-    listtype.classList.toggle('visible');
-    });
+// kalkulator kalkulator kalkulator
+        var dropDown = document.querySelectorAll('.drop_down_list');
+        var elements = document.querySelectorAll('.list_panel>li');
+        var checkbox = document.querySelector('#transport');
+        var twojFotel = document.querySelector('.panel_left h4');
+        var color =  document.querySelector('.panel_left .color');
+        var pattern =  document.querySelector('.panel_left .pattern');
+        var transport =  document.querySelector('.panel_left .transport');
+        var chairPrice = document.querySelector('.panel_right h4');
+        var colorPrice = document.querySelector('.panel_right .color');
+        var patternPrice = document.querySelector('.panel_right .pattern');
+        var transportPrice = document.querySelector('.panel_right .transport');
+        var labels = document.querySelectorAll('.list_label');
 
-    for(var i = 0; i < listitems.length; i++) {
-        listitems[i].addEventListener('click', function() {
+        //sumowanie
+        function calculatePrice() {
+            var values = document.querySelectorAll('.panel_right .value'); //pobieram wszystkie wartosci
+            var sum = 0; //zeruje sumę
+            for(var i = 0; i<values.length; ++i) {
+                var value = parseFloat(values[i].innerText);
 
-            twojFotel.innerText = this.innerText;
-            price.innerText = this.dataset.price;
-            listtype.classList.toggle('visible');
-            suma += parseFloat(this.dataset.price);
-            cena.innerText = suma + "zł";
+                if(!isNaN(value)) {
+                    //sumuje liczby różne od NaN
+                    sum += parseFloat(values[i].innerText);//dodaje kolejne wartości
+                }
+            }
 
-        });
-}
-// dotyczy coloru krzesła
-var arrowcolor = document.querySelector('.arrow-color');
-var listcolor = document.querySelector('.color-list');
-var colors = document.querySelector('.color-list').children;
-var color = document.querySelector('.panel_right span.color');
-var kolor = document.querySelector('.panel_left span.color');
-
-arrowcolor.addEventListener('click', function(){
-    listcolor.classList.toggle('visible');
-});
-for(var i = 0; i < colors.length; i++) {
-    colors[i].addEventListener('click', function() {
-        kolor.innerText = this.innerText;
-        color.innerText = "0";
-        listcolor.classList.toggle('visible');
-    });
-}
-// dotyczy materiału
-
-var arrowmaterial = document.querySelector('.arrow-material');
-var listmaterial = document.querySelector('.material-list');
-var materials = document.querySelector('.material-list').children;
-var tkanina = document.querySelector('.panel_left span.pattern');
-var pattern = document.querySelector('.panel_right span.pattern');
-
-arrowmaterial.addEventListener('click', function(){
-    listmaterial.classList.toggle('visible');
-});
-
-for(var i = 0; i < materials.length; i++) {
-    materials[i].addEventListener('click', function() {
-        tkanina.innerText = this.innerText;
-        pattern.innerText = this.dataset.price;
-        listmaterial.classList.toggle('visible');
-        suma += parseFloat(this.dataset.price);
-        cena.innerText = suma + "zł";
-
-    });
-}
-//dotyczy transportu
-
-var checkbox = document.querySelector('#transport');
-var transport = document.querySelector('.panel_left span.transport');
-var transport_price = document.querySelector('.panel_right span.transport');
-
-checkbox.addEventListener('click', function(){
-    if(checkbox.checked) {
-        transport.innerText = "Transport";
-        transport_price.innerText = checkbox.dataset.transportprice;
-        suma += parseFloat(this.dataset.transportprice);
-        cena.innerText = suma +"zł";
-}
-    else {
-        transport.innerText = "";
-        transport_price.innerText = "";
-        suma -= parseFloat(this.dataset.transportprice);
-        cena.innerText = suma + "zł";
+            var price = document.querySelector('.sum'); //pobieram element, gdzie chce zapisać sumę
+            price.innerText = sum; //przyisuję wyliczoną sumę
         }
-    })
+
+        //rozwijane strzałki
+
+        for (var i=0 ; i < dropDown.length; i++) {
+            dropDown[i].addEventListener('click', function(){
+                 this.querySelector('.list_panel').classList.toggle('visible');
+            });
+        }
+
+
+
+
+        //chair choice
+
+        for(var i = 0; i < elements.length; i++){
+
+            if(i < 3) {
+            elements[i].addEventListener('click', function(){
+                twojFotel.innerText = this.innerText;
+                chairPrice.innerText = this.dataset.price;
+                labels[0].innerText = this.innerText;
+                calculatePrice();
+
+            });
+        }
+        //color choice
+        else if(i < 6) {
+        elements[i].addEventListener('click', function(){
+            color.innerText = this.innerText;
+            colorPrice.innerText = this.dataset.price;
+            labels[1].innerText = this.innerText;
+            calculatePrice();
+
+            });
+        }
+        //pattern choice
+        else {
+        elements[i].addEventListener('click', function(){
+            pattern.innerText = this.innerText;
+            patternPrice.innerText = this.dataset.price;
+            labels[2].innerText = this.innerText;
+            calculatePrice();
+            });
+        }
+    }
+
+    //checkbox
+
+    checkbox.addEventListener('click', function(){
+        if(checkbox.checked) {
+            transport.innerText = 'Transport';
+            transportPrice.innerText = checkbox.dataset.price;
+        }
+        else {
+            transport.innerText = '';
+            transportPrice.innerText = '';
+        }
+        calculatePrice();
+    });
 });
