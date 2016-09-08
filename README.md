@@ -3,3 +3,17 @@
 The project of an online furniture shop 
 
 # Preview
+![layout](10ways.jpg)
+
+#Details
+
+In this project you can find the following functionalities:
+
+- a simple slider with changing chairs
+- different hover effects
+- an application to choose and calculate the price of the product
+- contact form
+
+
+#Licence
+CodersLab
