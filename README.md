@@ -3,7 +3,11 @@
 The project of an online furniture shop 
 
 # Preview
+
+https://htmlpreview.github.io/?https://github.com/adrianwys/Sit-On-Our-Chair-Project/blob/master/index.html
 ![layout](warsztat1.jpg)
+
+
 
 #Details
 
